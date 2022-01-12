@@ -20,12 +20,12 @@ const  discordSetup = async (): Promise<TextChannel> => {
   })
 }
 
-const buildMessage = (sale: any, usd: any) => (
+const buildCarMessage = (sale: any, usd: any) => (
   new Discord.MessageEmbed()
 	.setColor('#45da3f')
-	.setTitle(sale.asset.name + ' was sold!')
+	.setTitle('Car ' + sale.asset.name + ' was sold!')
 	.setURL(sale.asset.permalink)
-  .setDescription(`${sale.asset.description.split('.')[0]}. This Pixl was sold on ${format(new Date(sale?.created_date), "yyyy-MM-dd HH:mm")} UTC.`)
+  .setDescription(`${sale.asset.description.split('.')[0]}. This Car was sold on ${format(new Date(sale?.created_date), "yyyy-MM-dd HH:mm")} UTC.`)
 	.setThumbnail(sale.asset.image_url)
 	.addFields(
 		{ name: 'Sold For', inline: true, value: `${ethers.utils.formatEther(sale.total_price)} ${ethers.constants.EtherSymbol} ($${usd})`},
@@ -44,24 +44,24 @@ async function main() {
     }
   };
 
-  const openSeaResponse = await fetch(
+  const openSeaCarResponse = await fetch(
     "https://api.opensea.io/api/v1/events?" + new URLSearchParams({
       offset: '0',
       limit: '100',
       event_type: 'successful',
       only_opensea: 'false',
       occurred_after: hoursAgo.toString(), 
-      collection_slug: process.env.COLLECTION_SLUG!
+      collection_slug: process.env.CAR_COLLECTION_SLUG!
   }), settings).then((resp) => resp.json());
 
   await Promise.all(
-    openSeaResponse?.asset_events?.reverse().map(async (sale: any) => {
+    openSeaCarResponse?.asset_events?.reverse().map(async (sale: any) => {
       const formattedTokenPrice = ethers.utils.formatEther(sale.total_price.toString());
       const usd = (Number(formattedTokenPrice) * sale.payment_token.usd_price).toFixed(2);
-      const message = buildMessage(sale, usd);
+      const message = buildCarMessage(sale, usd);
       return channel.send(message)
     })
-  );  
+  );   
 }
 
 main()
