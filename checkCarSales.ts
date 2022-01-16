@@ -25,7 +25,7 @@ const buildCarMessage = (sale: any, usd: any) => (
 	.setColor('#45da3f')
 	.setTitle('Car ' + sale.asset.name + ' was sold!')
 	.setURL(sale.asset.permalink)
-  .setDescription(`${sale.asset.description.split('.')[0]}. This Car was sold on ${format(new Date(sale?.created_date), "yyyy-MM-dd HH:mm")} UTC.`)
+  .setDescription(`This Car was sold on ${format(new Date(sale?.created_date), "yyyy-MM-dd HH:mm")} UTC.`)
 	.setThumbnail(sale.asset.image_url)
 	.addFields(
 		{ name: 'Sold For', inline: true, value: `${ethers.utils.formatEther(sale.total_price)} ${ethers.constants.EtherSymbol} ($${usd})`},
