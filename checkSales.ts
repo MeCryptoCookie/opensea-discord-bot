@@ -59,6 +59,7 @@ async function main() {
       const formattedTokenPrice = ethers.utils.formatEther(sale.total_price.toString());
       const usd = (Number(formattedTokenPrice) * sale.payment_token.usd_price).toFixed(2);
       const message = buildMessage(sale, usd);
+      console.log(message);
       return channel.send(message)
     })
   );  
