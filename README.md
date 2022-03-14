@@ -1,3 +1,3 @@
-# Pixlton - RobroCarl
+# Pixlton - RobroCarl Sales Version
 
-This is RobroCarl. He can do stuff.
+This is RobroCarl. He can send sales to Discord.
