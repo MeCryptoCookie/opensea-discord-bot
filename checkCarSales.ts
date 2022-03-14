@@ -46,21 +46,26 @@ async function main() {
 
   const openSeaCarResponse = await fetch(
     "https://api.opensea.io/api/v1/events?" + new URLSearchParams({
-      offset: '0',
-      limit: '100',
       event_type: 'successful',
       only_opensea: 'false',
-      occurred_after: hoursAgo.toString(), 
       collection_slug: process.env.CAR_COLLECTION_SLUG!
   }), settings).then((resp) => resp.json());
 
   await Promise.all(
-    openSeaCarResponse?.asset_events?.reverse().map(async (sale: any) => {
-      const formattedTokenPrice = ethers.utils.formatEther(sale.total_price.toString());
-      const usd = (Number(formattedTokenPrice) * sale.payment_token.usd_price).toFixed(2);
-      const message = buildCarMessage(sale, usd);
-      console.log(message);
-      return channel.send(message)
+    openSeaCarResponse?.asset_events?.reverse().map(async (sale: any) => {var dateA = new Date(sale.created_date);
+      var dateB = new Date(Date.now());
+      dateB.setHours(dateB.getHours() - 1);
+      dateB.setMinutes(0);
+      dateB.setSeconds(0);
+
+      if(dateA > dateB)
+      {
+        const formattedTokenPrice = ethers.utils.formatEther(sale.total_price.toString());
+        const usd = (Number(formattedTokenPrice) * sale.payment_token.usd_price).toFixed(2);
+        const message = buildCarMessage(sale, usd);
+        console.log(message);
+        return channel.send(message)
+      }
     })
   );   
 }
