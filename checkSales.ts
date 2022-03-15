@@ -46,7 +46,6 @@ async function main() {
 
   const openSeaResponse = await fetch(
     "https://api.opensea.io/api/v1/events?" + new URLSearchParams({
-      // offset: '0',
       limit: '100',
       event_type: 'successful',
       only_opensea: 'false',
@@ -60,8 +59,6 @@ async function main() {
       dateB.setHours(dateB.getHours() - 1);
       dateB.setMinutes(0);
       dateB.setSeconds(0);
-
-      console.log(dateA + " / " + dateB);
 
       if(dateA > dateB)
       {
