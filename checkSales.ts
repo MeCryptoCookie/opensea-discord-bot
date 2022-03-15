@@ -61,6 +61,8 @@ async function main() {
       dateB.setMinutes(0);
       dateB.setSeconds(0);
 
+      console.log(dateA + " / " + dateB);
+
       if(dateA > dateB)
       {
         const formattedTokenPrice = ethers.utils.formatEther(sale.total_price.toString());
